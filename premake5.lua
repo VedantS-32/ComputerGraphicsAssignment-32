@@ -11,14 +11,20 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root directory
 IncludeDir = {}
-IncludeDir["GLFW"] = "%{wks.location}/vendor/GLFW/include"
 IncludeDir["Minimal"] = "%{wks.location}/Minimal/include"
+IncludeDir["GLFW"] = "%{wks.location}/vendor/GLFW/include"
+IncludeDir["GLAD"] = "%{wks.location}/vendor/GLAD/include"
+IncludeDir["glm"] = "%{wks.location}/vendor/glm"
+IncludeDir["ImGui"] = "%{wks.location}/vendor/ImGui"
 
 group "Dependencies"
-	include "vendor/GLFW"
 	include "Minimal"
+	include "vendor/GLFW"
+	include "vendor/GLAD"
+	include "vendor/ImGui"
 group ""
 
 group "Assignments"
 	include "A1_HelloWorld"
+	include "A2_Transformations"
 group ""

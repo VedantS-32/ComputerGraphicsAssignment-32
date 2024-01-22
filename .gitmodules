@@ -1,3 +1,6 @@
 [submodule "vendor/glfw"]
 	path = vendor/glfw
 	url = https://github.com/VedantS-32/glfw.git
+[submodule "vendor/ImGui"]
+	path = vendor/ImGui
+	url = https://github.com/VedantS-32/imgui.git
