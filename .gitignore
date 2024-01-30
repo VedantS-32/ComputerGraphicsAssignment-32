@@ -404,6 +404,7 @@ bin-int/
 # Solution File
 *.sln
 *.vcxproj
+*.filters
 
 # Dependencies
 vendor/

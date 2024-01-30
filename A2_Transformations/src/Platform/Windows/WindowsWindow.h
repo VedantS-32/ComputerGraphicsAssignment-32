@@ -7,9 +7,24 @@
 
 #include "Window.h"
 
+#include "Renderer/Renderer.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/VertexBufferLayout.h"
+#include "Renderer/Shader.h"
+
 class WindowsWindow : public Window
 {
 public:
+	VertexBuffer* VBO;
+	VertexBuffer* ColorBuffer;
+	IndexBuffer* IBO;
+	VertexArray* VAO;
+	VertexBufferLayout* Layout;
+	Shader* m_Shader;
+	Renderer* m_Renderer;
+
 	static bool s_GLFWInitialized;
 
 	WindowsWindow(const WindowProps& props);
@@ -31,8 +46,8 @@ private:
 
 	struct WindowInfo
 	{
-		unsigned int Width, Height;
-		std::string Title;
+		unsigned int Width = 640, Height = 640;
+		std::string Title = "Default Name";
 	};
 
 	WindowInfo m_Data;

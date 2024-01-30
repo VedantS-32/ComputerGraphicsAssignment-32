@@ -1,12 +1,13 @@
 #include "WindowsWindow.h"
 #include "imgui.h"
 
+#include "GLFW/glfw3.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-
 bool WindowsWindow::s_GLFWInitialized = false;
-static float CL[4] = { 1.0f, 1.0f, 0.0f, 1.0f };
+static float CL[4] = { 0.25f, 0.25f, 0.25f, 1.0f };
+static GLfloat CT[4] = { 0.9f, 0.3f, 0.5f, 1.0f };
 
 Window* Window::Create(const WindowProps& props)
 {
@@ -26,33 +27,6 @@ WindowsWindow::~WindowsWindow()
 inline bool WindowsWindow::IsOpen()
 {
 	return glfwWindowshouldClose(m_Window);
-}
-
-void WindowsWindow::Draw()
-{
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-
-	// Render ImGui
-	ImGui::Begin("Clear Color");
-	ImGui::ColorEdit4("Color", CL);
-	ImGui::End();
-	ImGui::Render();
-	glViewport(0, 0, m_Data.Width, m_Data.Height);
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
-
-void WindowsWindow::OnUpdate()
-{
-	
-	glClearColor(CL[0], CL[1], CL[2], CL[3]);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	Draw();
-
-	glfwSwapBuffers(m_Window);
-	glfwPollEvents();
 }
 
 void WindowsWindow::Init(WindowProps props)
@@ -80,14 +54,95 @@ void WindowsWindow::Init(WindowProps props)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
-	ImGui_ImplOpenGL3_Init("#version 130");
+	ImGui_ImplOpenGL3_Init("#version 330");
+
+	float positions[] = {
+		-0.5f, -0.5f,
+		 0.5f, -0.5f,
+		 0.5f,  0.5f,
+		-0.5f,  0.5f
+	};
+
+	uint32_t indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	float color[] = {
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f
+	};
+
+	m_Renderer = new Renderer;
+
+	VAO = new VertexArray();
+	Layout = new VertexBufferLayout();
+	VBO = new VertexBuffer(positions, 8 * sizeof(float));
+
+	Layout->Push<float>(2);
+	VAO->AddBuffer(VBO, Layout);
+
+	IBO = new IndexBuffer(indices, 6);
+
+	ColorBuffer = new VertexBuffer(color, sizeof(color));
+
+	Layout->Push<float>(3);
+	VAO->AddBuffer(ColorBuffer, Layout);
+	VAO->Bind();
+
+	m_Shader = new Shader("s1.vert", "s1.frag");
+
+	VBO->Unbind();
+	//IBO->Unbind();
+	VAO->Unbind();
 }
+
+
+void WindowsWindow::Draw()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	// Render ImGui
+	ImGui::Begin("Clear Color");
+	ImGui::ColorEdit4("Color", CL);
+	ImGui::End();
+	ImGui::Render();
+
+	m_Renderer->Draw(VAO, VBO, m_Shader);
+
+	GLCall(glViewport(0, 0, m_Data.Width, m_Data.Height));
+	
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void WindowsWindow::OnUpdate()
+{
+	m_Renderer->Clear();
+
+	Draw();
+
+	glfwSwapBuffers(m_Window);
+	glfwPollEvents();
+}
+
 
 void WindowsWindow::Shutdown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
+
+	delete VBO;
+	delete ColorBuffer;
+	delete IBO;
+	delete VAO;
+	delete Layout;
+	delete m_Shader;
+	delete m_Renderer;
 
 	glfwDestroyWindow(m_Window);
 	glfwTerminate();

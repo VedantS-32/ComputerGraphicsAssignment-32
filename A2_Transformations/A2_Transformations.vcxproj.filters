@@ -13,11 +13,28 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Renderer\VertexBufferLayout.h" />
+    <ClInclude Include="src\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Temp.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Transformations.cpp" />
+    <ClCompile Include="src\EntryPoint.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Renderer\VertexBufferLayout.cpp" />
+    <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Platform\Windows\SourceBAK.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
