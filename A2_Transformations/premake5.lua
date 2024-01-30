@@ -15,7 +15,9 @@ project "A2_Transformations"
 		"%{IncludeDir.Minimal}",
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links
@@ -23,6 +25,7 @@ project "A2_Transformations"
 		"GLFW",
 		"GLAD",
 		"ImGui",
+		"stb_image",
 		"opengl32.lib"
 	}
 

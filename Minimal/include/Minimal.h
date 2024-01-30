@@ -2,4 +2,4 @@
 
 #include <iostream>
 
-#define log(x) std::cout<<x<<std::endl
+#define print(x) std::cout<<x<<std::endl

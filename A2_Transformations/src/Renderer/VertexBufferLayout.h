@@ -44,9 +44,17 @@ public:
 	template<>
 	void Push<float>(unsigned int count)
 	{
+		//m_Elements.push_back({ count, GL_FLOAT, GL_FALSE });
+		//if (stride)
+		//	m_Stride1.push_back(stride);
+		//else
+		//{
+		//	m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
+		//	m_Stride1.push_back(count * VertexBufferElement::GetSizeOfType(GL_FLOAT));
+		//}
+
 		m_Elements.push_back({ count, GL_FLOAT, GL_FALSE });
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
-		m_Stride1.push_back(count * VertexBufferElement::GetSizeOfType(GL_FLOAT));
 	}
 
 	template<>
@@ -59,7 +67,13 @@ public:
 	template<>
 	void Push<unsigned char>(unsigned int count)
 	{
-		m_Elements.push_back({ count, GL_UNSIGNED_BYTE, GL_TRUE });
+		//m_Elements.push_back({ count, GL_UNSIGNED_BYTE, GL_TRUE });
+		//if (stride)
+		//	m_Stride1.push_back(stride);
+		//else
+		//	m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
+
+		m_Elements.push_back({ count, GL_UNSIGNED_BYTE, GL_FALSE });
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
 	}
 

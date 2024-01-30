@@ -9,7 +9,7 @@ bool GLLogCall(const char* function, const char* file, int line)
 {
 	while (GLenum error = glGetError())
 	{
-		log("[OpenGL Error]: " << std::hex << error << " " << function << " " << file << " : " << line);
+		print("[OpenGL Error]: " << std::hex << error << " " << function << " " << file << " : " << line);
 		return false;
 	}
 	return true;

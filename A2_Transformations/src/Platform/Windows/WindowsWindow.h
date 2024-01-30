@@ -13,17 +13,18 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/VertexBufferLayout.h"
 #include "Renderer/Shader.h"
+#include "Renderer/Texture.h"
 
 class WindowsWindow : public Window
 {
 public:
 	VertexBuffer* VBO;
-	VertexBuffer* ColorBuffer;
 	IndexBuffer* IBO;
 	VertexArray* VAO;
 	VertexBufferLayout* Layout;
 	Shader* m_Shader;
 	Renderer* m_Renderer;
+	Texture* m_Texture;
 
 	static bool s_GLFWInitialized;
 
