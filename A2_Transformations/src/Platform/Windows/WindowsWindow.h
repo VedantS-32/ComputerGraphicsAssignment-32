@@ -7,24 +7,15 @@
 
 #include "Window.h"
 
-#include "Renderer/Renderer.h"
-#include "Renderer/VertexBuffer.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/VertexBufferLayout.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Texture.h"
+#include "Test/TestClearColor.h"
+#include "Test/TestTexture2D.h"
 
 class WindowsWindow : public Window
 {
 public:
-	VertexBuffer* VBO;
-	IndexBuffer* IBO;
-	VertexArray* VAO;
-	VertexBufferLayout* Layout;
-	Shader* m_Shader;
-	Renderer* m_Renderer;
-	Texture* m_Texture;
+	test::Test* currentTest;
+	test::TestMenu* testMenu;
+	std::unique_ptr<test::TestMenu> testTexture;
 
 	static bool s_GLFWInitialized;
 

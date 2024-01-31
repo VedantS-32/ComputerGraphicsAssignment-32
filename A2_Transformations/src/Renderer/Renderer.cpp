@@ -21,11 +21,11 @@ void Renderer::Clear() const
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
 
-void Renderer::Draw(VertexArray* va, VertexBuffer* vb, Shader* shader) const
+void Renderer::Draw(const VertexArray& va, const VertexBuffer& vb, const Shader& shader) const
 {
-	shader->Bind();
-	va->Bind();
-	vb->Bind();
+	shader.Bind();
+	va.Bind();
+	vb.Bind();
 
 	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 }

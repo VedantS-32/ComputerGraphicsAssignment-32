@@ -21,5 +21,5 @@ class Renderer
 {
 public:
 	void Clear() const;
-	void Draw(VertexArray* va, VertexBuffer* vb, Shader* shader) const;
+	void Draw(const VertexArray& va, const VertexBuffer& vb, const Shader& shader) const;
 };

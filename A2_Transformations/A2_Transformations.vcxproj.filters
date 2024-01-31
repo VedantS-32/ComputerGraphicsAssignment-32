@@ -37,6 +37,9 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\Test\Test.h" />
+    <ClInclude Include="src\Test\TestClearColor.h" />
+    <ClInclude Include="src\Test\TestTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EntryPoint.cpp" />
@@ -64,5 +67,8 @@
     <ClCompile Include="src\Renderer\VertexBufferLayout.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Test\TestClearColor.cpp" />
+    <ClCompile Include="src\Test\Test.cpp" />
+    <ClCompile Include="src\Test\TestTexture2D.cpp" />
   </ItemGroup>
 </Project>
