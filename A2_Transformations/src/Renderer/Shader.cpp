@@ -12,6 +12,7 @@ Shader::Shader(const std::string& VertexShaderPath, const std::string& FragmentS
 
 Shader::~Shader()
 {
+	Unbind();
 	GLCall(glDeleteProgram(m_RendererID));
 }
 

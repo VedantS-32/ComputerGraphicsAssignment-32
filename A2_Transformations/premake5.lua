@@ -17,8 +17,23 @@ project "A2_Transformations"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.assimp}",
+		-- "%{IncludeDir.tiny_obj_loader}"
+		-- "vendor/assimp/.",
+		-- "vendor/assimp/code",
+		-- "vendor/assimp/include",
+		-- "vendor/assimp/contrib/irrXML",
+		-- "vendor/assimp/contrib/pugixml/src",
+		-- "vendor/assimp/contrib/zlib",
+		-- "vendor/assimp/contrib/rapidjson/include",
+		-- "vendor/assimp/contrib",
+		-- "vendor/assimp/contrib/utf8cpp/source",
+		-- "vendor/assimp/contrib/zip/src",
+		-- "vendor/assimp/contrib/unzip"
 	}
+	
+
 
 	links
 	{
@@ -26,6 +41,8 @@ project "A2_Transformations"
 		"GLAD",
 		"ImGui",
 		"stb_image",
+		"assimp",
+		-- "tiny_obj_loader",
 		"opengl32.lib"
 	}
 

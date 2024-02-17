@@ -11,45 +11,20 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+	Unbind();
 	GLCall(glDeleteVertexArrays(1, &m_RendererID));
 }
 
-void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
-{
-	vb.Bind();
-	unsigned int offset = 0;
-	const auto& elements = layout.GetElements();
-	for (unsigned int i = 0; i < elements.size(); i++)
-	{
-		const auto& element = elements[i];
-		GLCall(glEnableVertexAttribArray(i));
-		GLCall(glVertexAttribPointer(i, element.count, element.type, element.normalized,
-									 layout.GetStride(), (const void*)offset));
-		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
-	}
-}
-
-void VertexArray::AddBuffer(const VertexBuffer* vb, const VertexBufferLayout* layout, unsigned int offset)
+void VertexArray::LinkAttrib(const VertexBuffer& vb, unsigned int index, const VertexBufferLayout& layout, void* offset) const
 {
 	Bind();
-	vb->Bind();
-	const auto& elements = layout->GetElements();
-	for (unsigned int i = 0; i < elements.size(); i++)
-	{
-		const auto& element = elements[i];
-		GLCall(glEnableVertexAttribArray(i));
-		GLCall(glVertexAttribPointer(i, element.count, element.type, element.normalized,
-			layout->GetStride(), (const void*)offset));
-		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
-	}
+	vb.Bind();
+	const auto& elements = layout.GetElements();
 
-	//const auto& element = elements[s_VertexAttribLoc];
-	//GLCall(glEnableVertexAttribArray(s_VertexAttribLoc));
-	//GLCall(glVertexAttribPointer(s_VertexAttribLoc, element.count, element.type, element.normalized,
-	//	layout->GetStride(s_VertexAttribLoc), (const void*)offset));
-	//offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
-
-	//s_VertexAttribLoc++;
+	const auto& element = elements[index];
+	GLCall(glEnableVertexAttribArray(index));
+	GLCall(glVertexAttribPointer(element.index, element.count, element.type, element.normalized,
+		element.stride, offset));
 }
 
 void VertexArray::Bind() const

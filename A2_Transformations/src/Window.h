@@ -21,7 +21,10 @@ public:
 	virtual unsigned int GetWidth() const = 0;
 	virtual unsigned int GetHeight() const = 0;
 
+	inline virtual void* GetNativeWindow() const = 0;
+
 	static Window* Create(const WindowProps& props = WindowProps());
 	virtual inline bool IsOpen() = 0;
 	virtual void OnUpdate() = 0;
+	virtual void SwapBuffer() = 0;
 };

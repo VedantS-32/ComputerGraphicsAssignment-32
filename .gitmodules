@@ -4,3 +4,6 @@
 [submodule "vendor/ImGui"]
 	path = vendor/ImGui
 	url = https://github.com/VedantS-32/imgui.git
+[submodule "vendor/assimp"]
+	path = vendor/assimp
+	url = https://github.com/VedantS-32/assimp.git

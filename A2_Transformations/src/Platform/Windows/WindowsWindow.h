@@ -7,16 +7,9 @@
 
 #include "Window.h"
 
-#include "Test/TestClearColor.h"
-#include "Test/TestTexture2D.h"
-
 class WindowsWindow : public Window
 {
 public:
-	test::Test* currentTest;
-	test::TestMenu* testMenu;
-	std::unique_ptr<test::TestMenu> testTexture;
-
 	static bool s_GLFWInitialized;
 
 	WindowsWindow(const WindowProps& props);
@@ -25,9 +18,12 @@ public:
 	inline unsigned int GetWidth() const override { return m_Data.Width; }
 	inline unsigned int GetHeight() const override { return m_Data.Height; }
 
+	inline virtual void* GetNativeWindow() const { return m_Window; }
+
 	inline bool IsOpen() override;
-	void Draw();
+	void Input();
 	void OnUpdate() override;
+	void SwapBuffer() override;
 
 private:
 	void Init(WindowProps props);

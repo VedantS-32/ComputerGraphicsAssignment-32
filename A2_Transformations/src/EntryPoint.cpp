@@ -1,17 +1,13 @@
 #include "Minimal.h"
 #include "glm/glm.hpp"
 
-
-#include "Window.h"
+#include "Application.h"
 
 int main()
 {
-	auto window = std::shared_ptr<Window>(Window::Create(WindowProps(1280, 720)));
+	auto application = std::make_shared<Application>();
 
-	while (!window->IsOpen())
-	{
-		window->OnUpdate();
-	}
+	application->Run();
 
 	return 0;
 }

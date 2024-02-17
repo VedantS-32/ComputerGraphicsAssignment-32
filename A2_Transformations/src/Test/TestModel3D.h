@@ -10,6 +10,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Camera.h"
+#include "Renderer/Model.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -18,27 +19,31 @@
 
 namespace test {
 
-	class TestTexture2D : public Test
+	class TestModel3D : public Test
 	{
 	public:
-		TestTexture2D();
-		~TestTexture2D();
+		TestModel3D();
+		virtual ~TestModel3D();
 
-		void OnUpdate(float deltaTime) override;
-		void OnRender() override;
-		void OnImGuiRender() override;
+		virtual void OnUpdate(float deltaTime) override;
+		virtual void OnRender() override;
+		virtual void Input() override;
+		virtual void OnImGuiRender() override;
+
+		glm::mat4 m_Proj;
+		glm::mat4 m_View = glm::mat4(1.0f);
+		glm::vec3 m_Translation;
+		Camera m_Camera;
+		//glm::vec3 m_TranslationB;
 
 	private:
-		glm::mat4 m_Proj;
-		glm::mat4 m_View;
-		glm::vec3 m_TranslationA;
-		glm::vec3 m_TranslationB;
-
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<VertexArray> m_VertexArray;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture;
-		Camera m_Camera;
+		std::unique_ptr <Model> m_Model;
+
+		std::string m_Filepath;
 	};
 }

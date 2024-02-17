@@ -25,6 +25,7 @@ public:
 
 	void Bind() const;
 	void Unbind() const;
+	bool CompileShader();
 
 	// Set uniforms
 	void SetUniform1i(const std::string& name, int value);
@@ -34,7 +35,6 @@ public:
 
 private:
 	std::string ParseShader(std::string filename);
-	bool CompileShader();
 	void ComplieError(unsigned int shader, const char* type);
 	int GetUniformLocation(const std::string& name);
 };

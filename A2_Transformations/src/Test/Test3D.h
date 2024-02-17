@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Test.h"
+#include "Minimal.h"
 
 #include "Renderer/Renderer.h"
 #include "Renderer/VertexBuffer.h"
@@ -10,19 +11,21 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Camera.h"
+#include "Renderer/Model.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #include <memory>
 
 namespace test {
 
-	class TestTexture2D : public Test
+	class Test3D : public Test
 	{
 	public:
-		TestTexture2D();
-		~TestTexture2D();
+		Test3D();
+		~Test3D();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -30,8 +33,8 @@ namespace test {
 
 	private:
 		glm::mat4 m_Proj;
-		glm::mat4 m_View;
-		glm::vec3 m_TranslationA;
+		glm::mat4 m_View = glm::mat4(1.0f);
+		glm::vec3 m_Translation;
 		glm::vec3 m_TranslationB;
 
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
@@ -40,5 +43,8 @@ namespace test {
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture;
 		Camera m_Camera;
+		std::unique_ptr <Model> m_Model;
+
+		std::string m_Filepath;
 	};
 }

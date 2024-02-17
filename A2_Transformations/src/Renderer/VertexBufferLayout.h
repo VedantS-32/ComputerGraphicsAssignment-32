@@ -7,9 +7,11 @@
 
 struct VertexBufferElement
 {
+	unsigned int index;
 	unsigned int count;
 	unsigned int type;
 	unsigned char normalized;
+	int stride;
 
 	static unsigned int GetSizeOfType(unsigned int type)
 	{
@@ -28,57 +30,34 @@ class VertexBufferLayout
 {
 private:
 	std::vector<VertexBufferElement> m_Elements;
-	std::vector<unsigned int> m_Stride1;
-	unsigned int m_Stride;
 
 public:
-	VertexBufferLayout() :
-		m_Stride(0) {}
+	VertexBufferLayout() {}
 
 	template<typename T>
-	void Push(unsigned int count)
+	void Push(unsigned int index, unsigned int count, int stride)
 	{
 		static_assert(false);
 	}
 
 	template<>
-	void Push<float>(unsigned int count)
+	void Push<float>(unsigned int index, unsigned int count, int stride)
 	{
-		//m_Elements.push_back({ count, GL_FLOAT, GL_FALSE });
-		//if (stride)
-		//	m_Stride1.push_back(stride);
-		//else
-		//{
-		//	m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
-		//	m_Stride1.push_back(count * VertexBufferElement::GetSizeOfType(GL_FLOAT));
-		//}
-
-		m_Elements.push_back({ count, GL_FLOAT, GL_FALSE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
+		m_Elements.push_back({ index, count, GL_FLOAT, GL_FALSE, stride });
 	}
 
 	template<>
-	void Push<unsigned int>(unsigned int count)
+	void Push<unsigned int>(unsigned int index, unsigned int count, int stride)
 	{
-		m_Elements.push_back({ count, GL_UNSIGNED_INT, GL_FALSE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
+		m_Elements.push_back({ index, count, GL_UNSIGNED_INT, GL_FALSE, stride });
 	}
 
 	template<>
-	void Push<unsigned char>(unsigned int count)
+	void Push<unsigned char>(unsigned int index, unsigned int count, int stride)
 	{
-		//m_Elements.push_back({ count, GL_UNSIGNED_BYTE, GL_TRUE });
-		//if (stride)
-		//	m_Stride1.push_back(stride);
-		//else
-		//	m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
-
-		m_Elements.push_back({ count, GL_UNSIGNED_BYTE, GL_FALSE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
+		m_Elements.push_back({ index, count, GL_UNSIGNED_BYTE, GL_TRUE });
 	}
 
 	inline const std::vector<VertexBufferElement>& GetElements() const { return m_Elements; }
-	inline unsigned int GetStride() const { return m_Stride; }
-	inline unsigned int GetStride(unsigned int i) const { return m_Stride1[i]; }
 };
 

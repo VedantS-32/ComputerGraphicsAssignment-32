@@ -25,6 +25,7 @@ Texture::Texture(const std::string& path)
 
 Texture::~Texture()
 {
+	Unbind();
 	GLCall(glDeleteTextures(1, &m_RendererID));
 }
 

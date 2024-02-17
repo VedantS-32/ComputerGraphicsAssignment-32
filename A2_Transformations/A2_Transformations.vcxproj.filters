@@ -10,12 +10,25 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{45DC8C7C-3113-8E0D-DAFF-7310C6150A0F}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Camera.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Mesh.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Model.h">
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Renderer.h">
@@ -36,17 +49,41 @@
     <ClInclude Include="src\Renderer\VertexBufferLayout.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Test\Test.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\Test3D.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\TestClearColor.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\TestModel3D.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Test\TestTexture2D.h">
+      <Filter>Test</Filter>
+    </ClInclude>
     <ClInclude Include="src\Window.h" />
-    <ClInclude Include="src\Test\Test.h" />
-    <ClInclude Include="src\Test\TestClearColor.h" />
-    <ClInclude Include="src\Test\TestTexture2D.h" />
+    <ClInclude Include="src\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Camera.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Renderer\IndexBuffer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Mesh.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Model.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Renderer.cpp">
@@ -67,8 +104,24 @@
     <ClCompile Include="src\Renderer\VertexBufferLayout.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Test\TestClearColor.cpp" />
-    <ClCompile Include="src\Test\Test.cpp" />
-    <ClCompile Include="src\Test\TestTexture2D.cpp" />
+    <ClCompile Include="src\Test\Test.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\Test3D.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\TestClearColor.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\TestModel3D.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\TestTexture2D.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Input.h" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>

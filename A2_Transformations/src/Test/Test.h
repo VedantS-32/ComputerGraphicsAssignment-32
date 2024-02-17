@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <functional>
+#include <tuple>
 
 namespace test {
 	
@@ -16,6 +17,7 @@ namespace test {
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
+		virtual void Input() {}
 	};
 
 	class TestMenu : public Test
