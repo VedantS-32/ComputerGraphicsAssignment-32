@@ -37,6 +37,8 @@ namespace test {
 		//glm::vec3 m_TranslationB;
 
 	private:
+		float m_ClearColor[4];
+
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<VertexArray> m_VertexArray;
