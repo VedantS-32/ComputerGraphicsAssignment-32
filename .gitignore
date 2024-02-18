@@ -74,7 +74,7 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
-*.obj
+#*.obj
 *.iobj
 *.pch
 *.pdb
@@ -412,3 +412,6 @@ vendor/glfw
 vendor/ImGui
 vendor/premake
 vendor/glm
+
+# Resource files
+A2_Transformations/res/mesh

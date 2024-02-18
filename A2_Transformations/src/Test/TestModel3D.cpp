@@ -16,8 +16,8 @@ static std::string projection = "Perspective Projection";
 
 namespace test {
 	TestModel3D::TestModel3D()
-		: m_Translation(0.0f, -10.0f, -20.0f),
-		m_Filepath("res/mesh/Teapot.obj"),
+		: m_Translation(0.0f, 0.0f, -1.0f),
+		m_Filepath("res/model/Apple.fbx"),
 		m_ClearColor { 0.25f, 0.2f, 0.25f, 1.0f }
 	{
 		m_Model = std::make_unique<Model>();
