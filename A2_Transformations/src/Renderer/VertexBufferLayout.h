@@ -37,7 +37,7 @@ public:
 	template<typename T>
 	void Push(unsigned int index, unsigned int count, int stride)
 	{
-		static_assert(false);
+		//static_assert(false);
 	}
 
 	template<>

@@ -5,6 +5,10 @@ project "A2_Transformations"
 	targetdir ("bin/" .. outputdir .."/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .."/%{prj.name}")
 
+	postbuildcommands {
+		("{COPYFILE} ../vendor/assimp/bin/Release/assimp-vc143-mt.dll ./bin/" .. outputdir .. "/%{prj.name}")
+	}
+
 	files {
 		"src/**.h",
 		"src/**.cpp"
@@ -18,22 +22,12 @@ project "A2_Transformations"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.assimp}",
-		-- "%{IncludeDir.tiny_obj_loader}"
-		-- "vendor/assimp/.",
-		-- "vendor/assimp/code",
-		-- "vendor/assimp/include",
-		-- "vendor/assimp/contrib/irrXML",
-		-- "vendor/assimp/contrib/pugixml/src",
-		-- "vendor/assimp/contrib/zlib",
-		-- "vendor/assimp/contrib/rapidjson/include",
-		-- "vendor/assimp/contrib",
-		-- "vendor/assimp/contrib/utf8cpp/source",
-		-- "vendor/assimp/contrib/zip/src",
-		-- "vendor/assimp/contrib/unzip"
+		"%{IncludeDir.assimp}"
 	}
-	
 
+	libdirs {
+		"%{LibDir.assimpr}"
+	}
 
 	links
 	{
@@ -41,13 +35,12 @@ project "A2_Transformations"
 		"GLAD",
 		"ImGui",
 		"stb_image",
-		"assimp",
-		-- "tiny_obj_loader",
+		"assimp-vc143-mt",
 		"opengl32.lib"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
+		cppdialect "C++20"
 		staticruntime "off"
 		systemversion "latest"
 	

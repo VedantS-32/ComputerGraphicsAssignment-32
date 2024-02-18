@@ -17,8 +17,12 @@ IncludeDir["GLAD"] = "%{wks.location}/vendor/GLAD/include"
 IncludeDir["glm"] = "%{wks.location}/vendor/glm"
 IncludeDir["ImGui"] = "%{wks.location}/vendor/ImGui"
 IncludeDir["stb_image"] = "%{wks.location}/vendor/stb_image"
-IncludeDir["tiny_obj_loader"] = "%{wks.location}/vendor/tiny_obj_loader"
 IncludeDir["assimp"] = "%{wks.location}/vendor/assimp/include"
+
+-- Library directory
+LibDir = {}
+LibDir["assimpd"] = "%{wks.location}/vendor/assimp/lib/Debug" 
+LibDir["assimpr"] = "%{wks.location}/vendor/assimp/lib/Release" 
 
 group "Dependencies"
 	include "Minimal"
@@ -26,8 +30,6 @@ group "Dependencies"
 	include "vendor/GLAD"
 	include "vendor/ImGui"
 	include "vendor/stb_image"
-	include "vendor/tiny_obj_loader"
-	include "vendor/assimp"
 group ""
 
 group "Assignments"
