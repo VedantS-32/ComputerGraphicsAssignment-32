@@ -408,3 +408,8 @@ bin-int/
 
 # Dependencies
 vendor/
+
+# Include certain dependencies
+!vendor/GLAD
+!vendor/glm
+!vendor/stb_image
