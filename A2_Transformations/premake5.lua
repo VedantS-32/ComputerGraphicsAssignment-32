@@ -17,8 +17,8 @@ project "A2_Transformations"
 	includedirs {
 		"src",
 		"%{IncludeDir.Minimal}",
-		"%{IncludeDir.GLAD}",
-		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.glad}",
+		"%{IncludeDir.glfw}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
@@ -31,8 +31,8 @@ project "A2_Transformations"
 
 	links
 	{
-		"GLFW",
-		"GLAD",
+		"glfw",
+		"glad",
 		"ImGui",
 		"stb_image",
 		"assimp-vc143-mt",

@@ -407,9 +407,8 @@ bin-int/
 *.filters
 
 # Dependencies
-vendor/
-
-# Include certain dependencies
-!vendor/GLAD
-!vendor/glm
-!vendor/stb_image
+vendor/assimp
+vendor/glfw
+vendor/ImGui
+vendor/premake
+vendor/glm

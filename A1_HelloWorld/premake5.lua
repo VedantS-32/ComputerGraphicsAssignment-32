@@ -13,12 +13,12 @@ project "A1_HelloWorld"
 	includedirs {
 		"src",
 		"%{IncludeDir.Minimal}",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.glfw}"
 	}
 
 	links
 	{
-		"GLFW",
+		"glfw",
 		"opengl32.lib"
 	}
 

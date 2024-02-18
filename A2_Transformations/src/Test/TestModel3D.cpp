@@ -3,7 +3,7 @@
 #include "Input.h"
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <glfw/glfw3.h>
 #include <imgui.h>
 
 static float rotation = 1.0f;
