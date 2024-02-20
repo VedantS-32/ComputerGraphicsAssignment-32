@@ -10,6 +10,7 @@
 #include "Test/TestTexture2D.h"
 #include "Test/TestModel3D.h"
 #include "Test/Test3D.h"
+#include "Test/SimpleLighting.h"
 
 #include <memory>
 

@@ -75,6 +75,7 @@
       <Filter>Test</Filter>
     </ClInclude>
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\Test\SimpleLighting.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
@@ -133,5 +134,6 @@
     <ClCompile Include="src\Test\TestTexture2D.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="src\Test\SimpleLighting.cpp" />
   </ItemGroup>
 </Project>

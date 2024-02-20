@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Minimal.h"
-#include "glfw/glfw3.h"
 
 struct WindowProps
 {

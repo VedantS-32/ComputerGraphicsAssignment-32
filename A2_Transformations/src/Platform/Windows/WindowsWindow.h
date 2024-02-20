@@ -22,8 +22,8 @@ public:
 
 	inline bool IsOpen() override;
 	void Input();
-	void OnUpdate() override;
-	void SwapBuffer() override;
+	virtual void OnUpdate() override;
+	virtual void SwapBuffer() override;
 
 private:
 	void Init(WindowProps props);

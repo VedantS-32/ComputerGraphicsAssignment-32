@@ -21,8 +21,9 @@ Application::Application()
 
 	testMenu->RegisterTest<test::TestClearColor>("Clear Color");
 	testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
-	testMenu->RegisterTest<test::TestModel3D>("3D Model");
 	testMenu->RegisterTest<test::Test3D>("3D Test");
+	testMenu->RegisterTest<test::TestModel3D>("3D Model");
+	testMenu->RegisterTest<test::SimpleLighting>("Simple Lighting");
 }
 
 Application::~Application()
