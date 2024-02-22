@@ -23,8 +23,8 @@ static float s_LightColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
 namespace test {
 	SimpleLighting::SimpleLighting()
-		: m_Translation(0.0f, -10.0f, 20.0f),
-		m_Filepath("res/mesh/Teapot.obj"),
+		: m_Translation(0.0f, 25.0f, -5.0f),
+		m_Filepath("res/mesh/Apple.fbx"),
 		m_ClearColor { 0.25f, 0.2f, 0.25f, 1.0f }
 	{
 		m_Model = std::make_unique<Model>();
@@ -59,8 +59,6 @@ namespace test {
 		m_Texture->Bind();
 		m_Shader->Bind();
 		m_Shader->SetUniform1i("u_Texture", 0);
-
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 
 	SimpleLighting::~SimpleLighting()
@@ -82,7 +80,7 @@ namespace test {
 
 		Renderer renderer;
 		model = glm::translate(glm::mat4(1.0f), m_Translation);
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		m_Camera.Input();
 		glm::vec3 cameraPosition = m_Camera.GetPosition() + m_Translation;
 		glm::mat4 view = m_Camera.m_ViewMatrix;
