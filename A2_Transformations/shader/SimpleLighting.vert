@@ -18,7 +18,6 @@ uniform vec3 u_CameraPosition;
 void main()
 {
 	v_TexCoord = a_TexCoord;
-	//normal = a_Normal * u_ModelView;
 	v_Normal = normalize(mat3(transpose(inverse(u_ModelView))) * a_Normal);
 	v_LightPosition = normalize(u_LightPosition);
 	v_CameraPosition = normalize(u_CameraPosition);

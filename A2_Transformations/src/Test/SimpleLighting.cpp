@@ -1,5 +1,6 @@
 #include "SimpleLighting.h"
 
+#include "Application.h"
 #include "Input.h"
 
 #include <glad/glad.h>
@@ -14,6 +15,8 @@ static bool pressed1 = false;
 
 static std::string projection = "Perspective Projection";
 
+static float s_FOV = 55.0f;
+
 static float s_LightPosition[3] = {1.0f, 1.0f, 1.0f};
 static float s_SpecularColor[3] = {1.0f, 1.0f, 1.0f};
 static float s_AmbientLight[3] = {0.1f, 0.1f, 0.1f};
@@ -24,7 +27,7 @@ static float s_LightColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 namespace test {
 	SimpleLighting::SimpleLighting()
 		: m_Translation(0.0f, 25.0f, -5.0f),
-		m_Filepath("res/mesh/Apple.fbx"),
+		m_Filepath("res/mesh/Teapot.obj"),
 		m_ClearColor { 0.25f, 0.2f, 0.25f, 1.0f }
 	{
 		m_Model = std::make_unique<Model>();
@@ -33,10 +36,13 @@ namespace test {
 			print("Failed to load 3D Model");
 		}
 
-		//m_Camera.setOrthographicProjection(-16.0f, 16.0f, 9.0f, -9.0f, -500.0f, 500.0f);
-		m_Camera.setPerspectiveProjection(glm::radians(30.0f), (16.0f / 9.0f), -1000.0f, 1000.0f);
+		width = Application::Get().GetWindow().GetWidth();
+		height = Application::Get().GetWindow().GetHeight();
 
-		m_Proj = m_Camera.GetProjection();
+		//m_Camera.setOrthographicProjection(-16.0f, 16.0f, 9.0f, -9.0f, -500.0f, 500.0f);
+		//m_Camera.setPerspectiveProjection(glm::radians(s_FOV), ((float)(width) / (float)height), s_Near, s_Far);
+
+		m_Proj = glm::perspective<double>(glm::radians(s_FOV), (float)(width) / height, 0.1f, 10000.0f);
 
 		m_VertexArray = std::make_unique<VertexArray>();
 		m_VertexBuffer = std::make_unique<VertexBuffer>(&m_Model->getVertices()[0], m_Model->getVertices().size() * sizeof(Vertex));
@@ -71,7 +77,7 @@ namespace test {
 
 		if (rotation >= 360.f)
 			rotation = 0.0f;
-		rotation += 0.1f;
+		rotation += 0.05f;
 	}
 	void SimpleLighting::OnRender()
 	{
@@ -81,11 +87,13 @@ namespace test {
 		Renderer renderer;
 		model = glm::translate(glm::mat4(1.0f), m_Translation);
 		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		m_Camera.Input();
+
 		glm::vec3 cameraPosition = m_Camera.GetPosition() + m_Translation;
-		glm::mat4 view = m_Camera.m_ViewMatrix;
-		glm::mat4 modelView = view * model;
-		glm::mat4 mvp = m_Proj * view * model;
+		glm::mat4 modelView = m_Camera.m_ViewMatrix * model;
+		glm::mat4 mvp = m_Proj * modelView;
+
 		m_Shader->SetUniformMat4f("u_ModelView", modelView);
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 		m_Shader->SetUniform3f("u_LightPosition", s_LightPosition[0], s_LightPosition[1], s_LightPosition[2]);
@@ -108,16 +116,16 @@ namespace test {
 			{
 				projection = "Orthographic Projection";
 				print(projection);
-				m_Camera.setOrthographicProjection(-32.0f, 32.0f, 18.0f, -18.0f, -500.0f, 500.0f);
-				m_Proj = m_Camera.GetProjection();
+				//m_Camera.setOrthographicProjection(-32.0f, 32.0f, 18.0f, -18.0f, -500.0f, 500.0f);
+				m_Proj = glm::ortho<double>(-32.0f, 32.0f, -18.0f, 18.0f, -1000.0f, 1000.0f);
 				s_Projection = 0;
 			}
 			else
 			{
 				projection = "Perspective Projection";
 				print(projection);
-				m_Camera.setPerspectiveProjection(glm::radians(30.0f), (16.0f / 9.0f), -1000.0f, 1000.0f);
-				m_Proj = m_Camera.GetProjection();
+				//m_Camera.setPerspectiveProjection(glm::radians(s_FOV), ((float)(width) / (float)height), s_Near, s_Far);
+				m_Proj = glm::perspective<double>(glm::radians(s_FOV), (float)(width) / height, 0.1f, 10000.0f);
 				s_Projection = 1;
 			}
 			pressed = true;
@@ -145,6 +153,7 @@ namespace test {
 	{
 		ImGui::Begin("Simple Lighting");
 		ImGui::Text(projection.c_str());
+		ImGui::SliderFloat("Field of View", &s_FOV, 1.0f, 90.0f);
 		ImGui::SliderFloat3("Translation", &m_Translation.x, -30.0f, 30.0f);
 		ImGui::SliderFloat3("Light Position", s_LightPosition, -10.0f, 10.0f);
 		ImGui::ColorEdit3("Ambient Light", s_AmbientLight);

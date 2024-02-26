@@ -38,6 +38,9 @@ namespace test {
 	private:
 		float m_ClearColor[4];
 
+		uint32_t width;
+		uint32_t height;
+
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<VertexArray> m_VertexArray;

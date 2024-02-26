@@ -21,6 +21,16 @@ bool WindowsInput::IsMouseButtonPressedImpl(int button)
     return state == GLFW_PRESS || state == GLFW_REPEAT;
 }
 
+bool WindowsInput::IsMouseButtonReleasedImpl(int button)
+{
+    auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+    auto state = glfwGetMouseButton(window, button);
+    if (state == GLFW_RELEASE)
+        return true;
+    else
+        return false;
+}
+
 std::pair<float, float> WindowsInput::GetMousePositionImpl()
 {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());

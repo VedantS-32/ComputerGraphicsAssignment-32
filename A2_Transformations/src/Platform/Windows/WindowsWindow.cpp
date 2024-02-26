@@ -71,7 +71,7 @@ void WindowsWindow::OnUpdate()
 {
 	GLCall(glClearColor(0.25, 0.25, 0.25, 1.0));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-	GLCall(glViewport(0, 0, m_Data.Width, m_Data.Height));
+	GLCall(glViewport(0, 0, GetWidth(), GetHeight()));
 	
 	Input();
 }
