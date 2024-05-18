@@ -1,139 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ImGui">
-      <UniqueIdentifier>{C0FF640D-2C14-8DBE-F595-301E616989EF}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    <Filter Include="src\ImGui">
+      <UniqueIdentifier>{170E22B3-8378-D629-CCB6-87CF3860B47E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Renderer">
-      <UniqueIdentifier>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</UniqueIdentifier>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test">
-      <UniqueIdentifier>{45DC8C7C-3113-8E0D-DAFF-7310C6150A0F}</UniqueIdentifier>
+    <Filter Include="src\Renderer">
+      <UniqueIdentifier>{73D1DFBF-5F34-6F64-08BA-A71AF4FB3AE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Test">
+      <UniqueIdentifier>{BCFB25CF-A8C8-80DA-D1E1-6E82BD0DB668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\ImGui\ImGuiLayer.h">
-      <Filter>ImGui</Filter>
+    <ClInclude Include="..\vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\Application.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Editor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGui\ImGuiLayer.h">
+      <Filter>src\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\BufferLayout.h">
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Camera.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Mesh.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Model.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Renderer.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Shader.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Texture.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\VertexArray.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\VertexBuffer.h">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\VertexBufferLayout.h">
-      <Filter>Renderer</Filter>
+    <ClInclude Include="src\Test\SimpleLighting.h">
+      <Filter>src\Test</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\Test.h">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\Test3D.h">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\TestClearColor.h">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\TestModel3D.h">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClInclude>
     <ClInclude Include="src\Test\TestTexture2D.h">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClInclude>
-    <ClInclude Include="src\Window.h" />
-    <ClInclude Include="src\Test\SimpleLighting.h" />
+    <ClInclude Include="src\Window.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\EntryPoint.cpp" />
+    <ClCompile Include="..\vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EntryPoint.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\ImGui\ImGuiBuild.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>src\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGui\ImGuiLayer.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>src\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Camera.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\IndexBuffer.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Mesh.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Model.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Renderer.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Shader.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Texture.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\VertexArray.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\VertexBuffer.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test\SimpleLighting.cpp">
+      <Filter>src\Test</Filter>
     </ClCompile>
     <ClCompile Include="src\Test\Test.cpp">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClCompile>
     <ClCompile Include="src\Test\Test3D.cpp">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClCompile>
     <ClCompile Include="src\Test\TestClearColor.cpp">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClCompile>
     <ClCompile Include="src\Test\TestModel3D.cpp">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClCompile>
     <ClCompile Include="src\Test\TestTexture2D.cpp">
-      <Filter>Test</Filter>
+      <Filter>src\Test</Filter>
     </ClCompile>
-    <ClCompile Include="src\Test\SimpleLighting.cpp" />
   </ItemGroup>
 </Project>

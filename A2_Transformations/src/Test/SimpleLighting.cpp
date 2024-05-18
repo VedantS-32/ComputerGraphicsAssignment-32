@@ -1,6 +1,7 @@
 #include "SimpleLighting.h"
 
 #include "Application.h"
+#include "Renderer/Renderer.h"
 #include "Input.h"
 
 #include <glad/glad.h>
@@ -9,6 +10,7 @@
 
 static float rotation = 1.0f;
 static glm::mat4 model;
+static glm::mat4 lightposition;
 static int s_Projection = 1;
 static bool pressed = false;
 static bool pressed1 = false;
@@ -17,54 +19,27 @@ static std::string projection = "Perspective Projection";
 
 static float s_FOV = 55.0f;
 
-static float s_LightPosition[3] = {1.0f, 1.0f, 1.0f};
-static float s_SpecularColor[3] = {1.0f, 1.0f, 1.0f};
-static float s_AmbientLight[3] = {0.1f, 0.1f, 0.1f};
+static glm::vec3 s_LightPosition{1.0f, 1.0f, 1.0f};
+static glm::vec3 s_SpecularColor{1.0f, 1.0f, 1.0f};
+static glm::vec3 s_AmbientLight{0.1f, 0.1f, 0.1f};
 static float s_LightIntensity = 1.0f;
 static float s_SpecularAlpha = 100.0f;
-static float s_LightColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+static glm::vec4 s_LightColor{1.0f, 1.0f, 1.0f, 1.0f};
+static glm::vec4 s_ClearColor{ 0.25f, 0.2f, 0.25f, 1.0f };
 
 namespace test {
 	SimpleLighting::SimpleLighting()
-		: m_Translation(0.0f, 25.0f, -5.0f),
-		m_Filepath("res/mesh/Teapot.obj"),
-		m_ClearColor { 0.25f, 0.2f, 0.25f, 1.0f }
 	{
-		m_Model = std::make_unique<Model>();
-
-		if (m_Model->loadModel(m_Filepath.c_str()) != 0) {
-			print("Failed to load 3D Model");
-		}
+		m_Model = std::make_shared<Model>("res/model/CStellCube.obj");
+		m_ModelMatrix = m_Model->GetModelMatrix();
 
 		width = Application::Get().GetWindow().GetWidth();
 		height = Application::Get().GetWindow().GetHeight();
 
-		//m_Camera.setOrthographicProjection(-16.0f, 16.0f, 9.0f, -9.0f, -500.0f, 500.0f);
-		//m_Camera.setPerspectiveProjection(glm::radians(s_FOV), ((float)(width) / (float)height), s_Near, s_Far);
-
 		m_Proj = glm::perspective<double>(glm::radians(s_FOV), (float)(width) / height, 0.1f, 10000.0f);
+		m_Camera.SetProjection(m_Proj);
 
-		m_VertexArray = std::make_unique<VertexArray>();
-		m_VertexBuffer = std::make_unique<VertexBuffer>(&m_Model->getVertices()[0], m_Model->getVertices().size() * sizeof(Vertex));
-		m_IndexBuffer = std::make_unique<IndexBuffer>(&m_Model->getIndices()[0], m_Model->getIndices().size());
-
-		m_VertexArray->Bind();
-
-		VertexBufferLayout layout;
-		layout.Push<float>(0, 3, sizeof(Vertex));
-		m_VertexArray->LinkAttrib(*m_VertexBuffer, 0, layout, (void*)0);
-		layout.Push<float>(1, 3, sizeof(Vertex));
-		m_VertexArray->LinkAttrib(*m_VertexBuffer, 1, layout, (void*)offsetof(Vertex, m_normal));
-		layout.Push<float>(2, 2, sizeof(Vertex));
-		m_VertexArray->LinkAttrib(*m_VertexBuffer, 2, layout, (void*)offsetof(Vertex, m_texcoords));
-
-
-		m_Shader = std::make_unique<Shader>("shader/SimpleLighting.vert", "shader/SimpleLighting.frag");
 		m_Texture = std::make_unique<Texture>("res/texture/CStell2.png");
-
-		m_Texture->Bind();
-		m_Shader->Bind();
-		m_Shader->SetUniform1i("u_Texture", 0);
 	}
 
 	SimpleLighting::~SimpleLighting()
@@ -74,37 +49,39 @@ namespace test {
 	void SimpleLighting::OnUpdate(float deltaTime)
 	{
 		Input();
-
-		if (rotation >= 360.f)
-			rotation = 0.0f;
-		rotation += 0.05f;
 	}
 	void SimpleLighting::OnRender()
 	{
-		GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
+		GLCall(glClearColor(s_ClearColor.r, s_ClearColor.g, s_ClearColor.b, s_ClearColor.a));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-
-		Renderer renderer;
-		model = glm::translate(glm::mat4(1.0f), m_Translation);
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		m_Camera.Input();
 
-		glm::vec3 cameraPosition = m_Camera.GetPosition() + m_Translation;
-		glm::mat4 modelView = m_Camera.m_ViewMatrix * model;
-		glm::mat4 mvp = m_Proj * modelView;
+		m_Texture->Bind();
+		m_Shader = m_Model->GetShader();
+		m_Shader->Bind();
 
-		m_Shader->SetUniformMat4f("u_ModelView", modelView);
-		m_Shader->SetUniformMat4f("u_MVP", mvp);
-		m_Shader->SetUniform3f("u_LightPosition", s_LightPosition[0], s_LightPosition[1], s_LightPosition[2]);
-		m_Shader->SetUniform3f("u_AmbientLight", s_AmbientLight[0], s_AmbientLight[1], s_AmbientLight[2]);
+		m_Shader->SetUniform3f("u_LightPosition", s_LightPosition.x, s_LightPosition.y, s_LightPosition.z);
+		m_Shader->SetUniform3f("u_AmbientLight", s_AmbientLight.x, s_AmbientLight.y, s_AmbientLight.z);
 		m_Shader->SetUniform1f("u_LightIntensity", s_LightIntensity);
-		m_Shader->SetUniform3f("u_CameraPosition", cameraPosition[0], cameraPosition[1], cameraPosition[2]);
-		m_Shader->SetUniform3f("u_SpecularColor", s_SpecularColor[0], s_SpecularColor[1], s_SpecularColor[2]);
+		m_Shader->SetUniform3f("u_SpecularColor", s_SpecularColor.x, s_SpecularColor.y, s_SpecularColor.z);
 		m_Shader->SetUniform1f("u_SpecularAlpha", s_SpecularAlpha);
-		m_Shader->SetUniform4f("u_LightColor", s_LightColor[0], s_LightColor[1], s_LightColor[2], s_LightColor[3]);
+		m_Shader->SetUniform4f("u_LightColor", s_LightColor.x, s_LightColor.g, s_LightColor.b, s_LightColor.a);
 
-		renderer.Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, m_IndexBuffer->GetCount() * sizeof(unsigned int));
+		m_ModelMatrix = glm::translate(glm::mat4(1.0f), m_Translation) * glm::toMat4(glm::quat(glm::radians(m_Rotation))) *
+			glm::scale(glm::mat4(1.0f), m_Scale);
+
+		m_Model->UpdateModelMatrix(m_ModelMatrix);
+
+		m_Model->DrawModel(m_Camera);
+
+		if (s_Projection)
+			m_Proj = glm::perspective<double>(glm::radians(s_FOV), (float)(width) / height, 0.1f, 10000.0f);
+		else
+			m_Proj = glm::ortho<double>(-32.0f, 32.0f, -18.0f, 18.0f, -1000.0f, 1000.0f);
+
+		m_Camera.SetProjection(m_Proj);
+
 	}
 
 	void SimpleLighting::Input()
@@ -116,7 +93,6 @@ namespace test {
 			{
 				projection = "Orthographic Projection";
 				print(projection);
-				//m_Camera.setOrthographicProjection(-32.0f, 32.0f, 18.0f, -18.0f, -500.0f, 500.0f);
 				m_Proj = glm::ortho<double>(-32.0f, 32.0f, -18.0f, 18.0f, -1000.0f, 1000.0f);
 				s_Projection = 0;
 			}
@@ -124,10 +100,10 @@ namespace test {
 			{
 				projection = "Perspective Projection";
 				print(projection);
-				//m_Camera.setPerspectiveProjection(glm::radians(s_FOV), ((float)(width) / (float)height), s_Near, s_Far);
 				m_Proj = glm::perspective<double>(glm::radians(s_FOV), (float)(width) / height, 0.1f, 10000.0f);
 				s_Projection = 1;
 			}
+			m_Camera.SetProjection(m_Proj);
 			pressed = true;
 		}
 		if (key == 0)
@@ -139,6 +115,7 @@ namespace test {
 		if (key1 == 1 && pressed1 == false)
 		{
 			print("Recompiling Shaders");
+			m_Shader = m_Model->GetShader();
 			if (m_Shader->CompileShader())
 				print("Shaders Recompiled Successfully");
 			pressed1 = true;
@@ -154,14 +131,18 @@ namespace test {
 		ImGui::Begin("Simple Lighting");
 		ImGui::Text(projection.c_str());
 		ImGui::SliderFloat("Field of View", &s_FOV, 1.0f, 90.0f);
-		ImGui::SliderFloat3("Translation", &m_Translation.x, -30.0f, 30.0f);
-		ImGui::SliderFloat3("Light Position", s_LightPosition, -10.0f, 10.0f);
-		ImGui::ColorEdit3("Ambient Light", s_AmbientLight);
+
+		ImGui::DragFloat3("Translation", glm::value_ptr(m_Translation));
+		ImGui::DragFloat3("Rotation", glm::value_ptr(m_Rotation));
+		ImGui::DragFloat3("Scale", glm::value_ptr(m_Scale), 1.0f);
+
+		ImGui::SliderFloat3("Light Position", glm::value_ptr(s_LightPosition), -30.0f, 30.0f);
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(s_AmbientLight));
 		ImGui::SliderFloat("Light Intensity", &s_LightIntensity, 0.0f, 10.0f);
-		ImGui::ColorEdit4("Light Color", s_LightColor);
-		ImGui::ColorEdit3("Specular Color", s_SpecularColor);
+		ImGui::ColorEdit4("Light Color", glm::value_ptr(s_LightColor));
+		ImGui::ColorEdit3("Specular Color", glm::value_ptr(s_SpecularColor));
 		ImGui::SliderFloat("Specular Alpha", &s_SpecularAlpha, 0.0f, 10000.0f);
-		ImGui::ColorEdit4("Clear Color", m_ClearColor);
+		ImGui::ColorEdit4("Clear Color", glm::value_ptr(s_ClearColor));
 		ImGui::End();
 	}
 }

@@ -3,6 +3,18 @@
 #include "stb_image.h"
 #include <unordered_map>
 
+#include "Camera.h"
+#include "BufferLayout.h"
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/rotate_vector.hpp>
+
+Model::Model(std::string filepath)
+	: m_Filepath(filepath)
+{
+	m_Shader = std::make_shared<Shader>("shader/SimpleLighting.vert", "shader/SimpleLighting.frag");
+	PrepareMesh();
+}
 
 int Model::loadModel(std::string filepath)
 {
@@ -100,18 +112,62 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 	{
 		aiString str;
 		mat->GetTexture(type, i, &str);
-		Texture texture(m_Filepath);
+		Texture texture(str.C_Str());
 		textures.push_back(texture);
 	}
 	return textures;
 }
 
-const std::vector<Vertex>& Model::getVertices() const
+void Model::PrepareMesh()
 {
-    return m_Meshes[0].m_Vertices;
+	loadModel(m_Filepath);
+
+	m_VertexArray = std::make_shared<VertexArray>();
+
+	m_VertexArray->Bind();
+
+	std::vector<Vertex> vertices;
+	std::vector<uint32_t> indices;
+
+	for (auto& mesh : m_Meshes)
+	{
+		for (auto& vertex : mesh.GetVertices())
+			vertices.push_back(vertex);
+		for (auto& index : mesh.GetIndices())
+			indices.push_back(index);
+	}
+
+	m_VertexBuffer = std::make_shared<VertexBuffer>((void*)vertices.data(), (uint32_t)vertices.size() * sizeof(Vertex));
+	print("Vertices size: " << (uint32_t)vertices.size() * sizeof(Vertex));
+
+	BufferLayout layout;
+	layout.Push<float>(0, 3, sizeof(Vertex));
+	m_VertexArray->LinkAttrib(*m_VertexBuffer, layout, (void*)0);
+	layout.Push<float>(1, 3, sizeof(Vertex));
+	m_VertexArray->LinkAttrib(*m_VertexBuffer, layout, (void*)offsetof(Vertex, m_normal));
+	layout.Push<float>(2, 2, sizeof(Vertex));
+	m_VertexArray->LinkAttrib(*m_VertexBuffer, layout, (void*)offsetof(Vertex, m_texcoords));
+
+	m_IndexBuffer = std::make_shared<IndexBuffer>(indices.data(), (uint32_t)indices.size());
+	print("Indices count: " << indices.size());
 }
 
-const std::vector<unsigned int>& Model::getIndices() const
+void Model::DrawModel(const Camera& camera)
 {
-    return m_Meshes[0].m_Indices;
+	glm::mat4 modelView = camera.m_ViewMatrix * m_ModelMatrix;
+	glm::mat4 mvp = camera.GetProjection() * camera.m_ViewMatrix * m_ModelMatrix;
+	glm::vec3 cameraPosition = camera.GetPosition();
+
+	m_Shader->Bind();
+	m_Shader->SetUniform1i("u_Texture", 0);
+	m_Shader->SetUniformMat4f("u_ModelView", camera.m_ViewMatrix * m_ModelMatrix);
+	m_Shader->SetUniformMat4f("u_MVP", mvp);
+	m_Shader->SetUniform3f("u_CameraPosition", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+
+	Renderer::DrawIndexed(m_VertexArray, m_VertexBuffer, m_IndexBuffer->GetCount());
+}
+
+const std::vector<Mesh>& Model::GetMesh()
+{
+	return m_Meshes;
 }

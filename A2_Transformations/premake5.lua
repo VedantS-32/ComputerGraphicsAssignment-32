@@ -1,15 +1,15 @@
 project "A2_Transformations"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++20"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .."/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .."/%{prj.name}")
 
-	postbuildcommands {
-		("{COPYFILE} ../vendor/assimp/bin/Release/assimp-vc143-mt.dll ./bin/" .. outputdir .. "/%{prj.name}")
-	}
-
 	files {
+		"%{wks.location}/vendor/stb_image/**.h",
+		"%{wks.location}/vendor/stb_image/**.cpp",
 		"src/**.h",
 		"src/**.cpp"
 	}
@@ -25,27 +25,22 @@ project "A2_Transformations"
 		"%{IncludeDir.assimp}"
 	}
 
-	libdirs {
-		"%{LibDir.assimpr}"
-	}
-
 	links
 	{
 		"glfw",
 		"glad",
 		"ImGui",
-		"stb_image",
-		"assimp-vc143-mt",
+		"assimp",
 		"opengl32.lib"
 	}
 
 	filter "system:windows"
-		cppdialect "C++20"
-		staticruntime "off"
 		systemversion "latest"
 	
 	filter "configurations:Debug"
+		runtime "debug"
 		symbols "On"
 
 	filter "configurations:Release"
+		runtime "release"
 		optimize "On"

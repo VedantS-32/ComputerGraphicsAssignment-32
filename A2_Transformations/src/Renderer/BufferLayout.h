@@ -5,7 +5,7 @@
 
 #include "Renderer.h"
 
-struct VertexBufferElement
+struct BufferElement
 {
 	unsigned int index;
 	unsigned int count;
@@ -26,13 +26,13 @@ struct VertexBufferElement
 	}
 };
 
-class VertexBufferLayout
+class BufferLayout
 {
 private:
-	std::vector<VertexBufferElement> m_Elements;
+	std::vector<BufferElement> m_Elements;
 
 public:
-	VertexBufferLayout() {}
+	BufferLayout() {}
 
 	template<typename T>
 	void Push(unsigned int index, unsigned int count, int stride)
@@ -58,6 +58,6 @@ public:
 		m_Elements.push_back({ index, count, GL_UNSIGNED_BYTE, GL_TRUE });
 	}
 
-	inline const std::vector<VertexBufferElement>& GetElements() const { return m_Elements; }
+	inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 };
 

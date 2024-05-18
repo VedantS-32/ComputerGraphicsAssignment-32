@@ -1,6 +1,7 @@
 #include "Application.h"
 
-#include <Input.h>
+#include "Input.h"
+#include "Renderer/Renderer.h"
 
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
@@ -38,8 +39,11 @@ void Application::Run()
 	while (!m_Window->IsOpen())
 	{
 		m_Window->OnUpdate();
+		m_Editor->OnUpdate();
+		m_Editor->OnRender();
 		m_ImGuiLayer->Begin();
 		m_ImGuiLayer->OnImGuiRender();
+		m_Editor->OnImGuiRender();
 		if (currentTest)
 		{
 			currentTest->OnUpdate(0.0f);

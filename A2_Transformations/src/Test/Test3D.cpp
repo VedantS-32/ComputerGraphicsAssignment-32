@@ -1,5 +1,6 @@
 #include "Test3D.h"
 
+#include "Renderer/Renderer.h"
 #include "imgui.h"
 
 static float rotation = 1.0f;
@@ -47,7 +48,7 @@ namespace test {
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 18);
 
 
-		VertexBufferLayout layout;
+		BufferLayout layout;
 		layout.Push<float>(0, 3, 8 * sizeof(float));
 		m_VertexArray->LinkAttrib(*m_VertexBuffer, 0, layout, (void*)0);
 		layout.Push<float>(1, 3, 8 * sizeof(float));
@@ -75,20 +76,20 @@ namespace test {
 	}
 	void Test3D::OnRender()
 	{
-		Renderer renderer;
-		renderer.Clear();
+		//Renderer renderer;
+		Renderer::Clear();
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation);
 		model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
 		glm::mat4 mvp = m_Proj * m_View * model;
 		//glm::mat4 mvp = glm::mat4(1.0);
-		renderer.Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 18);
+		Renderer::Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 18);
 
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 		//m_Shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
 		model = glm::translate(glm::mat4(1.0f), m_TranslationB);
 		mvp = m_Proj * m_View * model;
-		renderer.Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 18);
+		Renderer::Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 18);
 
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 	}

@@ -9,10 +9,6 @@
 
 #include "Texture.h"
 
-#include "assimp/Importer.hpp"
-#include "assimp/scene.h"
-#include "assimp/postprocess.h"
-
 #include <vector>
 
 struct Vertex {
@@ -31,7 +27,10 @@ public:
         m_Textures = textures;
     }
 
+    std::vector<Vertex>& GetVertices() { return m_Vertices; }
+    std::vector<uint32_t>& GetIndices() { return m_Indices; }
+
     std::vector<Vertex> m_Vertices;
-    std::vector<unsigned int> m_Indices;
+    std::vector<uint32_t> m_Indices;
     std::vector<Texture> m_Textures;
 };

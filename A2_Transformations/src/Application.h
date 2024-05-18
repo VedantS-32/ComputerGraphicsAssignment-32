@@ -4,6 +4,7 @@
 #include "glfw/glfw3.h"
 
 #include "Window.h"
+#include "Editor.h"
 #include "ImGui/ImGuiLayer.h"
 
 #include "Test/TestClearColor.h"
@@ -18,6 +19,7 @@ class Application
 {
 public:
 	std::unique_ptr<Window> m_Window;
+	std::unique_ptr<Editor> m_Editor;
 	std::unique_ptr<ImGuiLayer> m_ImGuiLayer;
 
 	test::Test* currentTest;
@@ -34,4 +36,3 @@ public:
 private:
 	static Application* s_Instance;
 };
-

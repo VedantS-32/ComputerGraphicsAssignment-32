@@ -1,6 +1,7 @@
 #include "TestTexture2D.h"
 
 #include "imgui.h"
+#include "Renderer/Renderer.h"
 
 namespace test {
 	TestTexture2D::TestTexture2D()
@@ -33,7 +34,7 @@ namespace test {
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
 
 
-		VertexBufferLayout layout;
+		BufferLayout layout;
 		layout.Push<float>(0, 2, 4 * sizeof(float));
 		m_VertexArray->LinkAttrib(*m_VertexBuffer, 0, layout, 0);
 		layout.Push<float>(1, 2, 4 * sizeof(float));
@@ -56,18 +57,18 @@ namespace test {
 	}
 	void TestTexture2D::OnRender()
 	{
-		Renderer renderer;
-		renderer.Clear();
+		//Renderer renderer;
+		Renderer::Clear();
 
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationA);
 		glm::mat4 mvp = m_Proj * m_View * model;
-		renderer.Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 6);
+		Renderer::Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 6);
 
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 
 		model = glm::translate(glm::mat4(1.0f), m_TranslationB);
 		mvp = m_Proj * m_View * model;
-		renderer.Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 6);
+		Renderer::Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, 6);
 
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 	}

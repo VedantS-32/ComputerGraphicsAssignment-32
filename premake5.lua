@@ -19,17 +19,12 @@ IncludeDir["ImGui"] = "%{wks.location}/vendor/ImGui"
 IncludeDir["stb_image"] = "%{wks.location}/vendor/stb_image"
 IncludeDir["assimp"] = "%{wks.location}/vendor/assimp/include"
 
--- Library directory
-LibDir = {}
-LibDir["assimpd"] = "%{wks.location}/vendor/assimp/lib/Debug" 
-LibDir["assimpr"] = "%{wks.location}/vendor/assimp/lib/Release" 
-
 group "Dependencies"
 	include "Minimal"
 	include "vendor/glfw"
 	include "vendor/glad"
 	include "vendor/ImGui"
-	include "vendor/stb_image"
+	include "vendor/assimp"
 group ""
 
 group "Assignments"

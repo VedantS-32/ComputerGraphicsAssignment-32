@@ -6,14 +6,16 @@
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/VertexArray.h"
-#include "Renderer/VertexBufferLayout.h"
+#include "Renderer/BufferLayout.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Camera.h"
 #include "Renderer/Model.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtx/quaternion.hpp>
 
 #include <memory>
 
@@ -31,23 +33,19 @@ namespace test {
 		virtual void OnImGuiRender() override;
 
 		glm::mat4 m_Proj;
-		glm::vec3 m_Translation;
 		Camera m_Camera;
-		//glm::vec3 m_TranslationB;
 
 	private:
-		float m_ClearColor[4];
-
 		uint32_t width;
 		uint32_t height;
 
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
-		std::unique_ptr<VertexArray> m_VertexArray;
-		std::unique_ptr<Shader> m_Shader;
+		std::shared_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture;
-		std::unique_ptr <Model> m_Model;
+		std::shared_ptr <Model> m_Model;
 
-		std::string m_Filepath;
+		glm::mat4 m_ModelMatrix{ 1.0f };
+		glm::vec3 m_Translation{ 0.0f };
+		glm::vec3 m_Rotation{ 0.0f };
+		glm::vec3 m_Scale{ 1.0f };
 	};
 }

@@ -20,6 +20,9 @@ bool GLLogCall(const char* function, const char* file, int line);
 class Renderer
 {
 public:
-	void Clear() const;
-	void Draw(const VertexArray& va, const VertexBuffer& vb, const Shader& shader, unsigned int indicesCount) const;
+	friend class WindowsWindow;
+
+	static void Clear();
+	static void Draw(const VertexArray& va, const VertexBuffer& vb, const Shader& shader, unsigned int indicesCount);
+	static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<VertexBuffer>& vertexBuffer, uint32_t indexCount);
 };

@@ -1,6 +1,7 @@
 #include "TestModel3D.h"
 
 #include "Input.h"
+#include "Renderer/Renderer.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
@@ -32,12 +33,12 @@ namespace test {
 		m_Proj = m_Camera.GetProjection();
 
 		m_VertexArray = std::make_unique<VertexArray>();
-		m_VertexBuffer = std::make_unique<VertexBuffer>(&m_Model->getVertices()[0], m_Model->getVertices().size() * sizeof(Vertex));
-		m_IndexBuffer = std::make_unique<IndexBuffer>(&m_Model->getIndices()[0], m_Model->getIndices().size());
+		//m_VertexBuffer = std::make_unique<VertexBuffer>(&m_Model->getVertices()[0], m_Model->getVertices().size() * sizeof(Vertex));
+		//m_IndexBuffer = std::make_unique<IndexBuffer>(&m_Model->getIndices()[0], m_Model->getIndices().size());
 
 		m_VertexArray->Bind();
 
-		VertexBufferLayout layout;
+		BufferLayout layout;
 		layout.Push<float>(0, 3, sizeof(Vertex));
 		m_VertexArray->LinkAttrib(*m_VertexBuffer, 0, layout, (void*)0);
 		layout.Push<float>(1, 3, sizeof(Vertex));
@@ -78,13 +79,13 @@ namespace test {
 		GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-		Renderer renderer;
+		//Renderer renderer;
 		model = glm::translate(glm::mat4(1.0f), m_Translation);
 		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 mvp = m_Proj * m_View * model;
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 
-		renderer.Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, m_IndexBuffer->GetCount() * sizeof(unsigned int));
+		Renderer::Draw(*m_VertexArray, *m_VertexBuffer, *m_Shader, m_IndexBuffer->GetCount() * sizeof(unsigned int));
 	}
 
 	void TestModel3D::Input()
